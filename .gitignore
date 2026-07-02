@@ -1,0 +1,17 @@
+.vscode
+1_ptyhon
+3_database
+2_Dataanalysis
+5_git
+4_HTML_CSS
+6_JAVASCRIPT
+7_NODEJS
+homework
+venv
+testpartice
+node_modules/
+MEMO.txt
+CLIENT/
+.env
+requirements.txt
+tempCodeRunnerFile.js
