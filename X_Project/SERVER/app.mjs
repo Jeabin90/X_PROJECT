@@ -11,7 +11,6 @@ app.use("/post",postsRouter)
 app.use((req,res)=>{
     res.sendStatus(404)
 })
-
 connectDB().then(()=>{
     app.listen(config.host.port,()=>{
     console.log("서버 실행 중 ...")
