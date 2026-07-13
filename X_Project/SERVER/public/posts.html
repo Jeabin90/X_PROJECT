@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시판</title>
+</head>
+<body>
+
+<h2>게시글 목록</h2>
+
+<button onclick="location.href='write.html'">글쓰기</button>
+
+<hr>
+
+<div id="list"></div>
+
+<script>
+
+const token = localStorage.getItem("token")
+console.log(token)
+async function load(){
+
+    const response=await fetch("/post",{
+
+        headers:{
+            Authorization:"Bearer "+token
+        }
+
+    })
+
+    const posts=await response.json()
+
+    let html=""
+
+    posts.forEach(post=>{
+
+    html += `
+    <p>
+        <a href="post.html?id=${post._id}">
+        ${post.text}</a>(${post.userid})
+    </p>`
+
+    })
+
+    list.innerHTML=html
+
+}
+
+load()
+
+</script>
+
+</body>
+</html>

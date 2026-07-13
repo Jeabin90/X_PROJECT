@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>글쓰기</title>
+</head>
+<body>
+
+<textarea id="text"></textarea>
+
+<br><br>
+
+<button onclick="save()">저장</button>
+
+<script>
+
+async function save(){
+
+    await fetch("/post",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:"Bearer "+localStorage.getItem("token")
+        },
+
+        body:JSON.stringify({
+            text:text.value
+        })
+
+    })
+
+    location.href="posts.html"
+
+}
+
+</script>
+
+</body>
+</html>

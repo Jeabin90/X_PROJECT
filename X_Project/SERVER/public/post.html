@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시글 상세</title>
+</head>
+<body>
+
+<h2>게시글 상세</h2>
+
+<textarea id="text" rows="10" cols="50"></textarea>
+
+<br><br>
+
+<button onclick="updatePost()">수정하기</button>
+<button onclick="deletePost()">삭제하기</button>
+<button onclick="location.href='posts.html'">목록</button>
+
+<script>
+
+const token = localStorage.getItem("token")
+
+// posts.html에서 전달받은 _id
+const id = new URLSearchParams(location.search).get("id")
+
+// 게시글 조회
+async function load() {
+
+    const response = await fetch("/post/" + id, {
+        headers: {
+            Authorization: "Bearer " + token
+        }
+    })
+
+    const post = await response.json()
+
+    text.value = post.text
+}
+
+// 게시글 수정
+async function updatePost() {
+
+    const response = await fetch("/post/" + id, {
+
+        method: "PUT",
+
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+        },
+
+        body: JSON.stringify({
+            text: text.value
+        })
+
+    })
+
+    if(response.ok){
+        alert("수정 완료")
+        location.href = "posts.html"
+    }else{
+        alert("수정 실패")
+    }
+}
+
+// 게시글 삭제
+async function deletePost() {
+
+    if(!confirm("삭제하시겠습니까?")){
+        return
+    }
+
+    const response = await fetch("/post/" + id, {
+
+        method: "DELETE",
+
+        headers: {
+            Authorization: "Bearer " + token
+        }
+
+    })
+
+    if(response.ok){
+        alert("삭제 완료")
+        location.href = "posts.html"
+    }else{
+        alert("삭제 실패")
+    }
+}
+
+load()
+
+</script>
+
+</body>
+</html>
+

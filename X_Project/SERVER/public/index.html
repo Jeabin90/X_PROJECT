@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+</head>
+<body>
+
+<h2>로그인</h2>
+
+<input id="userid" placeholder="아이디"><br><br>
+<input id="password" type="password" placeholder="비밀번호"><br><br>
+
+<button onclick="login()">로그인</button>
+<br>
+<button onclick="location.href='join.html'">회원 가입
+</button>
+
+<script>
+async function login(){
+
+    const userid=document.getElementById("userid").value
+    const password=document.getElementById("password").value
+
+    const response=await fetch("/auth/login",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            userid,
+            password
+        })
+    })
+
+    const data=await response.json()
+
+    if(response.ok){
+        localStorage.setItem("token",data.token)
+        alert("로그인 성공")
+        location.href="posts.html"
+    }else{
+        alert(data.message)
+    }
+}
+</script>
+
+</body>
+</html>

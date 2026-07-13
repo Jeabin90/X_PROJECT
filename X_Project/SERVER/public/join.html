@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+<body>
+
+<h2>회원가입</h2>
+
+<input id="userid" placeholder="아이디"><br><br>
+<input id="password" type="password" placeholder="비밀번호"><br><br>
+<input id="name" placeholder="이름"><br><br>
+<input id="email" placeholder="이메일"><br><br>
+
+<button onclick="signup()">가입</button>
+
+<script>
+
+async function signup(){
+
+    const response=await fetch("/auth/signup",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            userid:userid.value,
+            password:password.value,
+            name:name.value,
+            email:email.value
+        })
+
+    })
+
+    const data=await response.json()
+
+    if(response.ok){
+        alert("회원가입 성공")
+        location.href="index.html"
+    }else{
+        alert(data.message)
+    }
+
+}
+
+</script>
+
+</body>
+</html>
